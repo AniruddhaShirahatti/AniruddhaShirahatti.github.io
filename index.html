@@ -17,7 +17,7 @@
   <body>
 
       <header>
-        <h1>Aniruddhashirahatti.github.io</h1>
+        <h1>Aniruddha Shirahatti</h1>
         <p></p>
       </header>
 
@@ -33,37 +33,117 @@
       </nav>
       <section>
         <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome !</h3>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<h3>JSON Parsing in JAVA Code</h3>
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
+<p>EXAMPLE : Consider the JSON data below which is to be parsed.</p>
+
+<pre><code>
+{
+    "coord": {
+        "lon": 72.85,
+        "lat": 19.01
+    },
+    "sys": {
+        "message": 0.01,
+        "country": "IN",
+        "sunrise": 1399077557,
+        "sunset": 1399123897
+    },
+    "weather": [
+        {
+            "id": 803,
+            "main": "Clouds",
+            "description": "broken clouds",
+            "icon": "04d"
+        }
+    ],
+    "base": "cmc stations",
+    "main": {
+        "temp": 299.041,
+        "temp_min": 299.041,
+        "temp_max": 299.041,
+        "pressure": 1021.06,
+        "sea_level": 1021.95,
+        "grnd_level": 1021.06,
+        "humidity": 100
+    },
+    "wind": {
+        "speed": 2.86,
+        "deg": 320.5
+    },
+    "clouds": {
+        "all": 56
+    },
+    "dt": 1399102067,
+    "id": 1275339,
+    "name": "Mumbai",
+    "cod": 200
+}
 </code></pre>
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<p>We receive the above JSON data after hitting the URL.</p>
 
-<h3>
-<a name="designer-templates" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+<h3>JSON Parsing in JAVA</h3>
+<h4>--> Working with JSON Objects</h4>
+<p>In this code, we call the web service which in turn gives the JSON data. This JSON data is immediately parsed.</p>
+<p>So, First we connect to the web service, read the data and create an object which stores the parsed JSON data.</p>
+<p>See the code below :</p>
+<pre><code>
+URLConnection url = new URL("http://api.openweathermap.org/data/2.5/weather?q=Mumbai,India").openConnection();
+InputStream is = url.getInputStream();
+InputStreamReader isr = new InputStreamReader(is);
+            
+JSONParser parser = new JSONParser();
+Object obj = parser.parse(isr);
+</code></pre>
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
+<p>Now, we we have to create a JSON Object to access its elements.</p>
 
-<h3>
-<a name="rather-drive-stick" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Rather Drive Stick?</h3>
+<pre><code>
+JSONObject jsonObject = (JSONObject) obj;
+</code></pre>
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+<p>Here, we convert the object of class Object into JSONObject.</p>
+<p>NOW, Consider the JSON object "coord". Here, we create a JSONObject of "coord" and get its elements namely "lon" and "lat" : </p>
 
-<h3>
-<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+<pre><code>
+JSONObject coordObj1 = (JSONObject) jsonObject.get("coord");        
+Double lon=(Double) coordObj1.get("lon");      
+Double lat=(Double) coordObj1.get("lat");
+System.out.println("Longitude :"+lon+", Latitude :"+lat);
+</code></pre>
 
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
+<p>Similarly, we have to deal with all the JSON objects and get their elements.</p>
 
-<h3>
-<a name="support-or-contact" class="anchor" href="#support-or-contact"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
+<h4>--> Working with JSON Arrays</h4>
+<p>The process of getting the elements in a JSON Array is same as that of JSON Objects. But here, since its an array we use iterator to retrieve all the elements inside this JSONArray.</p>
 
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
+<pre><code>
+JSONArray mJsonArray =(JSONArray) jsonObject.get("weather") ;
+JSONObject mJsonObject = new JSONObject();
+for (int i = 0; i < mJsonArray.size(); i++) 
+{
+    mJsonObject = (JSONObject) mJsonArray.get(i);
+    Long id = (Long) mJsonObject.get("id");
+    String main = (String) mJsonObject.get("main");
+    String description = (String) mJsonObject.get("description");
+    String icon = (String) mJsonObject.get("icon");
+    System.out.println("Weather_ID :"+id+",        Weather_Main :"+main+",        Weather_Description :"+description+",         Weather_Icon :"+icon);
+}             
+</code></pre>
+
+
+<h3>NOTE : Add "json-simple-1.1.1.jar" to your library.</h3>
+<p>Download "json-simple-1.1.1.jar" from here ----> <a href="https://code.google.com/p/json-simple/downloads/detail?name=json-simple-1.1.1.jar&can=2&q=" class="button fork"><strong>json-simple-1.1.1.jar</strong></a></p>
+
+
+<h3>FULL Source code DOWNLOAD</h3>
+<p>If the code is helpful for you, please download full source code from here----> <a href="https://github.com/AniruddhaShirahatti/JSON-parsing-in-java" class="button fork"><strong>JSON Parsing in JAVA code</strong></a> </p>
+<p>Thank you !</p>
+
+
       <footer>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
       </footer>
