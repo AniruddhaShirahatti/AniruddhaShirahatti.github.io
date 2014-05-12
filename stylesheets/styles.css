@@ -512,7 +512,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: #333;
+  color: #0062BD;
   margin: 0 0 10px;
 }
 
@@ -534,7 +534,7 @@ h2 {
 }
 
 h3, h4, h5, h6 {
-  color: #666666;
+  color: #0062BD;
 }
 
 h3 {
@@ -561,7 +561,7 @@ ul {
 
 strong {
   font-weight: bold;
-  color: #333;
+  color: #0062BD;
 }
 
 .wrapper {

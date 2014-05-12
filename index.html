@@ -33,7 +33,7 @@
       </nav>
       <section>
         <h3>
-<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>Welcome !</h3>
+<a name="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages"><span class="octicon octicon-link"></span></a>WELCOME !</h3>
 
 <h3>JSON Parsing in JAVA Code</h3>
 
@@ -83,7 +83,7 @@
 }
 </code></pre>
 
-<p>We receive the above JSON data after hitting the URL.</p>
+<p>We receive the above JSON data after hitting the URL "http://api.openweathermap.org/data/2.5/weather?q=City,Country" where "City" and  "Country" are the required parameters.</p>
 
 <h3>JSON Parsing in JAVA</h3>
 <h4>--> Working with JSON Objects</h4>
@@ -91,7 +91,7 @@
 <p>So, First we connect to the web service, read the data and create an object which stores the parsed JSON data.</p>
 <p>See the code below :</p>
 <pre><code>
-URLConnection url = new URL("http://api.openweathermap.org/data/2.5/weather?q=Mumbai,India").openConnection();
+URLConnection url = new URL("http://api.openweathermap.org/data/2.5/weather?q=city,country").openConnection();
 InputStream is = url.getInputStream();
 InputStreamReader isr = new InputStreamReader(is);
             
